@@ -1,0 +1,113 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "StartUpSG API",
+    "description" : "**All the API is documented here by Alpsoft Technologies Pte Ltd** <br />\nThe following overview describes the list of API’s, which was used for creating the REST APIs for the IWC feature. The API traffic has been encrypted using HTTPS. A VPC link is set up to allow connecting API routes to private resources inside a VPC.",
+    "contact" : {
+      "name" : "chew hou ming",
+      "url" : "enquiry@enterprisesg.gov.sg",
+      "email" : "alvin@alpsoft-tech.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://ssn-core.production",
+    "description" : "Production server"
+  }, {
+    "url" : "https://staging.startupsg.gov.sg",
+    "description" : "Staging Server"
+  } ],
+  "tags" : [ {
+    "name" : "Internet Web crawler",
+    "description" : "Operations available to regular all users"
+  } ],
+  "paths" : {
+    "/api/v0/iwc/get-profiles" : {
+      "get" : {
+        "tags" : [ "get-profile" ],
+        "summary" : "searches inventory",
+        "description" : "This API endpoint is for IWC to get all entity profiles. Profiles will be fetched from SSN. If no filters are provided, full dump will be performed. Before calling this API, IWC needs to call Login to get access token. Then pass the token as authorization header within the request.\n",
+        "operationId" : "searchInventory",
+        "parameters" : [ {
+          "name" : "startDate",
+          "in" : "query",
+          "description" : "The entity list start range the crawler wants to retrieve",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-06-21T14:10:15.000Z"
+          }
+        }, {
+          "name" : "endDate",
+          "in" : "query",
+          "description" : "The entity list end range the crawler wants to retrieve",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "2021-09-21T14:15:15.000Z"
+          }
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "description" : "Items per page",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 100
+          }
+        }, {
+          "name" : "type",
+          "in" : "query",
+          "description" : "Profile type to filter by (startup, multiplier, venture_capital)",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "isInactive",
+          "in" : "query",
+          "description" : "If company has ceased operation, isInactive flag will be true",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "boolean",
+            "example" : true
+          }
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "description" : "Offset for pagination",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "number",
+            "example" : 0
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "401" : {
+            "description" : "token is not valid or expired"
+          }
+        }
+      }
+    }
+  },
+  "components" : { }
+}
